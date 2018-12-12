@@ -9,9 +9,4 @@
 import Foundation
 import UIKit
 
-public final class DSButton: UIButton {
 
-    public override func awakeFromNib() {
-        self.backgroundColor = UIColor.blue
-    }
-}
