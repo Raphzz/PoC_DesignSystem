@@ -19,21 +19,11 @@ Pod::Spec.new do |s|
   s.version      = "0.0.1"
   s.summary      = "Proof of Concept on Design System for iOS."
   s.description  = "Proof of Concept on Design System for iOS and how to implement Atomic Design and other concepts into projects."
-
-  s.homepage     = "http://EXAMPLE/PoC_DesignSystem"
-  # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
+  s.homepage     = "https://github.com/Raphzz/PoC_DesignSystem.git"
 
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
-  #
-  #  Licensing your code is important. See http://choosealicense.com for more info.
-  #  CocoaPods will detect a license file if there is a named LICENSE*
-  #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
-  #
-
-  s.license      = "MIT (example)"
-  # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
-
+  s.license      = "MIT"
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
