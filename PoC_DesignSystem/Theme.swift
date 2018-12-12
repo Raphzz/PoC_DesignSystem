@@ -5,9 +5,9 @@ import UIKit
 
 let SelectedThemeKey = "SelectedTheme"
 
-enum Theme: Int {
+public enum Theme: Int {
     case normal, dark, graphical
-    
+
     var mainColor: UIColor {
         switch self {
         case .normal:
@@ -18,7 +18,18 @@ enum Theme: Int {
             return UIColor(red: 10.0/255.0, green: 10.0/255.0, blue: 10.0/255.0, alpha: 1.0)
         }
     }
-    
+
+    var titleColor: UIColor {
+        switch self {
+        case .normal:
+            return UIColor.darkGray
+        case .dark:
+            return UIColor.white
+        case .graphical:
+            return UIColor.blue
+        }
+    }
+
     var barStyle: UIBarStyle {
         switch self {
         case .normal, .graphical:
@@ -27,15 +38,15 @@ enum Theme: Int {
             return .black
         }
     }
-    
+
     var navigationBackgroundImage: UIImage? {
         return self == .graphical ? UIImage(named: "navBackground") : nil
     }
-    
+
     var tabBarBackgroundImage: UIImage? {
         return self == .graphical ? UIImage(named: "tabBarBackground") : nil
     }
-    
+
     var backgroundColor: UIColor {
         switch self {
         case .normal, .graphical:
@@ -44,7 +55,7 @@ enum Theme: Int {
             return UIColor.lightGray
         }
     }
-    
+
     var secondaryColor: UIColor {
         switch self {
         case .normal:
@@ -57,8 +68,8 @@ enum Theme: Int {
     }
 }
 
-struct ThemeManager {
-    
+public struct ThemeManager {
+
     static func currentTheme() -> Theme {
         UserDefaults.standard.value(forKeyPath: SelectedThemeKey)
         if let storedTheme = (UserDefaults.standard.value(forKey: SelectedThemeKey) as AnyObject).integerValue {
@@ -67,64 +78,61 @@ struct ThemeManager {
             return .normal
         }
     }
-    
-    static func applyTheme(theme: Theme) {
+
+    public static func applyTheme(theme: Theme) {
         // 1
         //    UserDefaults.standard.setValue(theme.rawValue, forKey: SelectedThemeKey)
         UserDefaults.standard.set(theme.rawValue, forKey: SelectedThemeKey)
         UserDefaults.standard.synchronize()
-        
+
         // 2
         let sharedApplication = UIApplication.shared
         sharedApplication.delegate?.window??.tintColor = theme.mainColor
-        
+
         UINavigationBar.appearance().barStyle = theme.barStyle
         //UINavigationBar.appearance().tintColor = theme.secondaryColor
         UINavigationBar.appearance().backgroundColor = theme.secondaryColor
         //UINavigationBar.appearance().setBackgroundImage(theme.navigationBackgroundImage, forBarMetrics: .default)
         UINavigationBar.appearance().setBackgroundImage(theme.navigationBackgroundImage, for: .default)
-        
+
         let font = UIFont(name: "Helvetica-Neue", size: CGFloat(17))
-        
+
         if (font != nil) {
             UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.font: font!,
-                                                                NSAttributedString.Key.foregroundColor: currentTheme().mainColor]
+                                                                NSAttributedString.Key.foregroundColor: currentTheme().titleColor]
         } else {
-            UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: currentTheme().mainColor]
+            UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: currentTheme().titleColor]
         }
-        
-        UINavigationBar.appearance().backIndicatorImage = UIImage(named: "backArrow")
-        UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(named: "backArrowMaskFixed")
-        
+
         UITableView.appearance().sectionIndexBackgroundColor = theme.secondaryColor
-        
+
         //
         UITabBar.appearance().barStyle = theme.barStyle
         UITabBar.appearance().backgroundImage = theme.tabBarBackgroundImage
-        
+
         let tabIndicator = UIImage(named: "tabBarSelectionIndicator")?.withRenderingMode(.alwaysTemplate)
         let tabResizableIndicator = tabIndicator?.resizableImage(withCapInsets: UIEdgeInsets(top: 0, left: 2.0, bottom: 0, right: 2.0))
         UITabBar.appearance().selectionIndicatorImage = tabResizableIndicator
-        
+
         //
         let controlBackground = UIImage(named: "controlBackground")?.withRenderingMode(.alwaysTemplate)
             .resizableImage(withCapInsets: UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))
         let controlSelectedBackground = UIImage(named: "controlSelectedBackground")?
             .withRenderingMode(.alwaysTemplate)
             .resizableImage(withCapInsets: UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))
-        
+
         UISegmentedControl.appearance().setBackgroundImage(controlBackground, for: .normal,
                                                            barMetrics: .default)
         UISegmentedControl.appearance().setBackgroundImage(controlSelectedBackground, for: .selected,
                                                            barMetrics: .default)
-        
+
         //
         UIStepper.appearance().setBackgroundImage(controlBackground, for: .normal)
         UIStepper.appearance().setBackgroundImage(controlBackground, for: .disabled)
         UIStepper.appearance().setBackgroundImage(controlBackground, for: .highlighted)
         UIStepper.appearance().setDecrementImage(UIImage(named: "fewerPaws"), for: .normal)
         UIStepper.appearance().setIncrementImage(UIImage(named: "morePaws"), for: .normal)
-        
+
         //
         UISlider.appearance().setThumbImage(UIImage(named: "sliderThumb"), for: .normal)
         UISlider.appearance().setMaximumTrackImage(UIImage(named: "maximumTrack")?
