@@ -17,7 +17,6 @@ enum Theme: Int {
         case .graphical:
             return UIColor(red: 10.0/255.0, green: 10.0/255.0, blue: 10.0/255.0, alpha: 1.0)
         }
-        
     }
     
     var barStyle: UIBarStyle {

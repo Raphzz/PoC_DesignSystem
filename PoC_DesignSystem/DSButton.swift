@@ -9,4 +9,8 @@
 import Foundation
 import UIKit
 
-
+extension UIButton {
+    open override func awakeFromNib() {
+        //self.backgroundColor = 
+    }
+}
