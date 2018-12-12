@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class DSButton: UIButton {
+public final class DSButton: UIButton {
 
     required public init?(coder aDecoder: NSCoder) {
 
