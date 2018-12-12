@@ -11,11 +11,7 @@ import UIKit
 
 public final class DSButton: UIButton {
 
-    required public init?(coder aDecoder: NSCoder) {
-
-        super.init(coder: aDecoder)
-
+    public override func awakeFromNib() {
         self.backgroundColor = UIColor.blue
-
     }
 }
